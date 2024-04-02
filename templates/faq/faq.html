@@ -1,0 +1,151 @@
+{% extends 'base/base.html' %}
+
+{% block title%}FAQ{% endblock %}
+{% load static %}
+
+{% block main %} 
+
+<nav aria-label="breadcrumb" class="breadcrumb-nav">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">Pages</a></li>
+            <li class="breadcrumb-item active" aria-current="page">FAQ</li>
+        </ol>
+    </div><!-- End .container -->
+</nav><!-- End .breadcrumb-nav -->
+
+<div class="page-content">
+    <div class="container">
+        <h2 class="title text-center mb-3">Shipping Information</h2><!-- End .title -->
+        <div class="accordion accordion-rounded" id="accordion-1">
+            <div class="card card-box card-sm bg-light">
+                <div class="card-header" id="heading-1">
+                    <h2 class="card-title">
+                        <a role="button" data-toggle="collapse" href="#collapse-1" aria-expanded="true" aria-controls="collapse-1">
+                            How will my parcel be delivered?
+                        </a>
+                    </h2>
+                </div><!-- End .card-header -->
+                <div id="collapse-1" class="collapse show" aria-labelledby="heading-1" data-parent="#accordion-1">
+                    <div class="card-body">
+                        Your parcel will be delivered using reliable and efficient shipping services. We partner with trusted carriers to ensure your order reaches you in a timely manner. You'll receive a tracking number once your order is shipped, allowing you to monitor its progress and estimated delivery date. Rest assured, we prioritize the safe and secure delivery of your self-care essentials.
+                    </div><!-- End .card-body -->
+                </div><!-- End .collapse -->
+            </div><!-- End .card -->
+
+            <div class="card card-box card-sm bg-light">
+                <div class="card-header" id="heading-2">
+                    <h2 class="card-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" href="#collapse-2" aria-expanded="false" aria-controls="collapse-2">
+                            Do I pay for delivery?
+                        </a>
+                    </h2>
+                </div><!-- End .card-header -->
+                <div id="collapse-2" class="collapse" aria-labelledby="heading-2" data-parent="#accordion-1">
+                    <div class="card-body">
+                        Yes, delivery fees may apply and will be calculated during the checkout process based on your location and the shipping method selected. Keep an eye out for any promotions or free shipping offers that may be available. We strive to offer transparent and fair shipping costs to ensure a seamless shopping experience for our customers.
+                    </div><!-- End .card-body -->
+                </div><!-- End .collapse -->
+            </div><!-- End .card -->
+
+            <div class="card card-box card-sm bg-light">
+                <div class="card-header" id="heading-4">
+                    <h2 class="card-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" href="#collapse-4" aria-expanded="false" aria-controls="collapse-4">
+                            My item has become faulty
+                        </a>
+                    </h2>
+                </div><!-- End .card-header -->
+                <div id="collapse-4" class="collapse" aria-labelledby="heading-4" data-parent="#accordion-1">
+                    <div class="card-body">
+                        We apologize for any inconvenience. Please contact our customer support team with your order number and details about the issue. We'll work swiftly to assess the situation and provide you with the necessary assistance, whether it involves a replacement, refund, or another appropriate solution. Your satisfaction is our priority, and we're here to ensure your self-care experience is nothing short of exceptional.
+                    </div><!-- End .card-body -->
+                </div><!-- End .collapse -->
+            </div><!-- End .card -->
+        </div><!-- End .accordion -->
+
+        <h2 class="title text-center mb-3">Orders and Returns</h2><!-- End .title -->
+        <div class="accordion accordion-rounded" id="accordion-2">
+            <div class="card card-box card-sm bg-light">
+                <div class="card-header" id="heading2-1">
+                    <h2 class="card-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" href="#collapse2-1" aria-expanded="false" aria-controls="collapse2-1">
+                            Tracking my order
+                        </a>
+                    </h2>
+                </div><!-- End .card-header -->
+                <div id="collapse2-1" class="collapse" aria-labelledby="heading2-1" data-parent="#accordion-2">
+                    <div class="card-body">
+                        After your order is processed and shipped, you will receive an email containing a tracking number. Use this tracking number on our website's "Track Order" page or follow the link provided in the email to monitor your package's delivery status. For further assistance or inquiries, don't hesitate to reach out to our customer support team. We're here to ensure your order arrives smoothly and on time.
+                    </div><!-- End .card-body -->
+                </div><!-- End .collapse -->
+            </div><!-- End .card -->
+
+            <div class="card card-box card-sm bg-light">
+                <div class="card-header" id="heading2-2">
+                    <h2 class="card-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" href="#collapse2-2" aria-expanded="false" aria-controls="collapse2-2">
+                            I haven’t received my order
+                        </a>
+                    </h2>
+                </div><!-- End .card-header -->
+                <div id="collapse2-2" class="collapse" aria-labelledby="heading2-2" data-parent="#accordion-2">
+                    <div class="card-body">
+                        We understand your concern, and we apologize for any inconvenience. First, check the tracking information provided in your shipping confirmation email to see the current status of your delivery. If there are any unusual delays or issues, please contact our customer support team with your order number. We'll investigate promptly and work to resolve any issues to ensure you receive your order as quickly as possible. Your satisfaction is our priority, and we appreciate your patience.
+                    </div><!-- End .card-body -->
+                </div><!-- End .collapse -->
+            </div><!-- End .card -->
+
+            <div class="card card-box card-sm bg-light">
+                <div class="card-header" id="heading2-3">
+                    <h2 class="card-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" href="#collapse2-3" aria-expanded="false" aria-controls="collapse2-3">
+                            How can I return an item?
+                        </a>
+                    </h2>
+                </div><!-- End .card-header -->
+                <div id="collapse2-3" class="collapse" aria-labelledby="heading2-3" data-parent="#accordion-2">
+                    <div class="card-body">
+                        If, for any reason, you are dissatisfied with your purchase, you can return any items that are unopened and unused within 30 days of receiving them. Please ensure that all packaging, cellophane wrapping, and tamper-resistant seals remain intact; otherwise, the item will be deemed unsuitable for resale and will not be accepted by our returns department. 
+                    </div><!-- End .card-body -->
+                </div><!-- End .collapse -->
+            </div><!-- End .card -->
+        </div><!-- End .accordion -->
+
+        <h2 class="title text-center mb-3">Payments</h2><!-- End .title -->
+        <div class="accordion accordion-rounded" id="accordion-3">
+            <div class="card card-box card-sm bg-light">
+                <div class="card-header" id="heading3-1">
+                    <h2 class="card-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" href="#collapse3-1" aria-expanded="false" aria-controls="collapse3-1">
+                            What payment methods can I use?
+                        </a>
+                    </h2>
+                </div><!-- End .card-header -->
+                <div id="collapse3-1" class="collapse" aria-labelledby="heading3-1" data-parent="#accordion-3">
+                    <div class="card-body">
+                        We accept credit and debit cards.
+                    </div><!-- End .card-body -->
+                </div><!-- End .collapse -->
+            </div><!-- End .card -->
+
+            <div class="card card-box card-sm bg-light">
+                <div class="card-header" id="heading3-4">
+                    <h2 class="card-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" href="#collapse3-4" aria-expanded="false" aria-controls="collapse3-4">
+                            Has my payment gone through?
+                        </a>
+                    </h2>
+                </div><!-- End .card-header -->
+                <div id="collapse3-4" class="collapse" aria-labelledby="heading3-4" data-parent="#accordion-3">
+                    <div class="card-body">
+                        Upon successful completion of your order, you should receive a confirmation email, which serves as acknowledgment that your payment has been successfully processed. If you haven't received this confirmation, please check your email spam folder. Additionally, you can log in to your account on our website to view your order history and payment status. If you have any concerns or need further assistance, feel free to contact our customer support team and we'll be happy to help.
+                    </div><!-- End .card-body -->
+                </div><!-- End .collapse -->
+            </div><!-- End .card -->
+        </div><!-- End .accordion -->
+    </div><!-- End .container -->
+</div><!-- End .page-content -->
+
+{% endblock%}

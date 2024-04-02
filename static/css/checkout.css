@@ -1,0 +1,57 @@
+.StripeElement{
+    box-sizing: border-box;
+    height: 40px;
+    padding: 10px 12px;
+    border: 1px solid #7d7a7a;
+    border-radius: 4px;
+    background-color: #fff;
+    box-shadow: 0 1px 3px 0 #e6ebf1;
+    --webkit-transition: box-shadow 500ms ease;
+    transition: box-shadow 500ms ease;
+    width: 100% !important;
+} 
+
+
+.StripeElement--focus{
+    box-shadow: 0 1px 3px 0 #cfd7ef;
+} 
+
+.StripeElement--invalid{
+    border-color: #fa755a !important;
+} 
+
+.StripeElement--webkit-autofill{
+    background-color:  #fefde5 !important;
+
+}
+
+.loading-overlay{
+    position: fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height: 100%;
+    background: rgba(23,162,184,.80);
+    z-index: 9999;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.spinner-grow {
+    display: inline-block;
+    width: 15rem;
+    height: 15rem;
+   
+}
+
+.loading-overlay p{
+   
+    font-size: 5rem;
+   
+}
+
+.StripeElement--webkit-autofill{
+    background-color:  #fefde5;
+
+} 

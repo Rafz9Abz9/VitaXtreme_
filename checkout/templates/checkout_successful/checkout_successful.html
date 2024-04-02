@@ -1,0 +1,176 @@
+{% extends 'base/base.html' %}
+{% block title%}Thank You - Checkout Success{% endblock %}
+{% load static %}
+{% load countries %}
+
+{% block main %}
+<nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{%url 'home'%}">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">Pages</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Thank You - Your Checkout was successful</li>
+        </ol>
+    </div><!-- End .container -->
+</nav><!-- End .breadcrumb-nav -->
+
+<div class="error-content " style="background-image: url(assets/images/backgrounds/error-bg.jpg)">
+    <div class="container">
+        <h1 class="error-title text-center">Thank You</h1><!-- End .error-title -->
+        <p  class=" text-center">Your Order Information is Below, A Confirmation email will be sent to <strong class="text-success">{{order.email}}</strong></p>
+        <div class="row">
+            <div class="col-12 col-lg-8 offset-lg-2">
+                <div class="confirmation-wrapper">
+                    <div class="row">
+                        <div class="col">
+                            <small class="text-muted">Order Info</small>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <p>Order Number</p>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <p>{{order.order_number}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <small class="text-muted">Order Details</small>
+                        </div>
+                    </div>
+                    {% for item in order.lineitems.all %}
+                        <div class="row">
+                            <div class="col-12 col-md-6">
+                                <p class="small mb-0 text-black font-weight-bold">{{item.product.name}}</p>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <p class="small mb-0 ">{{item.quantity}} x {{item.product.formatted_price}} each</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    <div class="row">
+                        <div class="col">
+                            <small class="text-muted">Delivery To:</small>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <p >Full Name</p>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <p >{{order.full_name}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <p >Last Name</p>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <p>{{order.last_name}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <p >Email</p>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <p >{{order.email}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <p >Phone</p>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <p class="small ">{{order.phone}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <p >Post Code</p>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <p>{{order.post_code}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <p >City</p>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <p >{{order.city}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <p >State</p>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <p class="small mb-0 ">{{order.state}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <p >Country</p>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            {% get_country order.country as country %}
+                            <p >{{country.name}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <small class="text-muted">Billing Info</small>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <p >Order Total</p>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <p class="small mb-0 ">{{order.formatted_sub_total}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <small class="text-muted">Delivery Info</small>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <p >Delivery Method</p>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <p class="small mb-0 ">{{order.shipping_method}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <p >Delivery Price</p>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <p >{{order.formatted_shipping_price}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <p >Grand Total</p>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <p >{{order.formatted_grand_total}}</p>
+                        </div>
+                    </div>
+                </div> 
+            </div>  
+        </div>  
+        <div class="text-center">
+            <a href="{% url 'products'%}" class="btn btn-outline-primary-2 btn-minwidth-lg my-5">
+                <span>Shop More</span>
+                <i class="icon-long-arrow-left"></i>
+            </a>
+
+        </div>   
+    </div><!-- End .container -->
+</div><!-- End .error-content text-center -->
+{% endblock %}

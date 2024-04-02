@@ -1,0 +1,164 @@
+{% extends 'base/base.html' %}
+{% block title%}username{% endblock %}
+{% load static %}
+{% load countries %}
+
+{% block extracss %}
+<style>
+    input[name="old_password"], input[name="new_password1"], input[name="new_password2"]  {
+        width: 100%;
+        padding: 10px;
+        margin: 5px 0 20px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+    }
+</style>
+{% endblock %}
+
+{% block main %}
+<nav aria-label="breadcrumb" class="breadcrumb-nav">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">Profile</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{% if user.first_name|length > 0 or user.last_name|length > 0%} {{user.first_name}} {{user.last_name}} {% else %} {{user.email}} {% endif %}</li>
+        </ol>
+    </div><!-- End .container -->
+</nav><!-- End .breadcrumb-nav -->
+
+<div class="page-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10">
+                <div class="row tab-content">
+                    <div id="accountInfo" class="col-lg-12 tab-pane fade in active show">
+                        <h2 class="border rounded mb-0 py-3 px-4" style="border-top-right-radius: 15px !important; width:450px">Account Information</h2>
+                        <hr class="mt-0 mb-3">
+                        <div class="row mb-3">
+                             <div class="col-12 col-sm-6">
+                                <h4>User Information </h4>
+                                {% if user.first_name|length > 0 or user.last_name|length > 0 %}
+                                    <span>First Name:{{ user.first_name}} </span><br>
+                                    <span>Last Name: {{user.last_name}}</span>
+                                {% else %}
+                                    <span>First and Last name fields are empty</span>
+                                {% endif %}  
+                                <br>
+                                {% if user.email|length > 0  %}
+                                    <span>Email: {{ user.email}}</span>
+                                {% else %}
+                                    <span>Email field is empty</span>
+                                {% endif %}  
+                                 <div class="mt-2">
+                                     <button class="btn btn-outline mb-2" data-toggle="modal" data-target="#editUserInfoModal">Edit Info</button>
+                                     <button class="btn btn-outline mb-2" data-toggle="modal" data-target="#changePassword">Change Password</button>
+                                 </div>
+                                 {% include 'includes/modals/edit_user_info_modal.html' %}
+                                 {% include 'includes/modals/change_password_modal.html' with form=change_password_form %}.
+                             </div><!-- End .col-6 -->
+                         
+                             <div class="col-12 col-sm-6">
+                                <h4>Newsletter</h4>
+                                {% if user.is_subscribed_newsletter %}
+                                    <p>You are subscribeed to the newsletter</p>
+                                {% else %}
+                                    <p>You aren't subscribe to the newsletter </p>
+                                {% endif %}
+                                 <div class="mt-2">
+                                    {% if user.is_subscribed_newsletter %}
+                                        <button class="btn btn-outline"  data-toggle="modal" data-target="#newsletter">UnSubscribe Newsletter</button>
+                                    {% else %}
+                                        <button class="btn btn-outline"  data-toggle="modal" data-target="#newsletter">Subscribe Newsletter</button>
+                                    {% endif %}
+                                     
+                                     
+                                 </div>
+                                 {% include 'includes/modals/newsletter_modal.html' %}.
+                             </div><!-- End .co -->
+                        </div> <!-- End .row -->
+                        <div class="row mb-3">
+                             <div class="col-12 col-sm-6">
+                                <h4>Default Shipping Address</h4>
+                                {% if user_shipping_address.phone or user_shipping_address.street_address or user_shipping_address.post_code or user_shipping_address.city or user_shipping_address.country or user_shipping_address.state%}
+                                    <span>Email: {{user_shipping_address.email}} </span> 
+                                    <span class="ml-3">Phone: {{user_shipping_address.phone}} </span><br>
+                                    <span>Street Address: {{user_shipping_address.street_address}}  </span><br>
+                                    <span>Post Code: {{user_shipping_address.post_code}}</span>
+                                    <span class="ml-3">City: {{user_shipping_address.city}}</span><br>
+                                    <span>State: {{user_shipping_address.state}}</span>
+                                    {% get_country user_shipping_address.country as country %}
+
+                                    <span class="ml-3">Country: {{ country.name }}</span>
+                                {% else %}
+                                    <p>Complete setting a default shipping address</span>
+                                {% endif %}
+                                 <div class="mt-2">
+                                     <button class="btn btn-outline" data-toggle="modal" data-target="#editShippingAddress">Edit Info</button>
+                                 </div>
+                                 
+                                 {% include 'includes/modals/edit_shipping_address_modal.html' with shipping_address=user_shipping_address %}
+                             </div><!-- End .co -->
+                        </div> <!-- End .row -->
+                    </div><!-- End .col-lg-9 -->
+                    <div id="myorders" class="col-lg-12 tab-pane fade in">
+                    <h2 class="border rounded mb-0 py-3 px-4" style="border-top-right-radius: 15px !important; width:350px">My Orders</h2>
+                    <hr class="mt-0 mb-3">
+                    <div class="row mb-3">
+                        {% include 'includes/order/order.html' %}
+                    </div> <!-- End .row -->
+                    </div><!-- End .col-lg-9 -->
+                    <div id="myreviews" class="col-lg-12 tab-pane fade in">
+                    <h2 class="border rounded mb-0 py-3 px-4" style="border-top-right-radius: 15px !important; width:350px">My Reviews</h2>
+                    <hr class="mt-0 mb-3">
+                    <div class="row mb-3">
+                        {% include 'includes/user_reviews/user_reviews.html' with reviews=user_reviews%}
+                    </div> <!-- End .row -->
+                    </div><!-- End .col-lg-9 -->
+                </div>
+            </div>
+            
+            <aside class="col-lg-2 order-first m-0">
+                <div class="sidebar sidebar-shop">
+                    <ul class="nav nav-tabs flex-column w-100 shadow-sm p-5">
+                        <li class="active">
+                            <a  data-toggle="tab" href="#accountInfo">My Account Info</a>
+                            <hr class="my-2">
+                        </li><!-- End .tabx -->
+                        <li class="">
+                            <a  data-toggle="tab" href="#myorders">My Orders</a>
+                            <hr class="my-2">
+                        </li><!-- End .tab -->
+                        <li class="">
+                            <a  data-toggle="tab" href="#myreviews">My Reviews</a>
+                        </li><!-- End .tab -->
+                    </ul><!-- End .nav nav-tabs -->
+                </div><!-- End .sidebar sidebar-shop -->
+            </aside><!-- End .col-lg-3 -->
+        </div><!-- End .row -->
+    </div>
+</div>
+{% endblock %}
+
+{% block extrascripts %}
+<script>
+    {% comment %} To Trigger Change Password Form {% endcomment %}
+    $('#change_password_btn').click(function (e) {
+        e.preventDefault();
+        $('#change_password_form').submit();
+    });
+
+    {% comment %} To Trigger update shipping info Form {% endcomment %}
+    $('#update_shipping_info_btn').click(function (e) {
+        e.preventDefault();
+        $('#update_shipping_info_form').submit();
+    });
+
+    {% comment %} To Trigger Edit User Info Form {% endcomment %}
+    $('#edit_user_info_btn').click(function (e) {
+        e.preventDefault();
+        $('#edit_user_info_form').submit();
+    });
+
+</script>
+{% endblock %}

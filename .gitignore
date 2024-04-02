@@ -1,0 +1,52 @@
+# Ignore Python byte code
+__pycache__/
+*.pyc
+
+# Ignore database files
+*.sqlite3
+db.sqlite3
+
+# Ignore environment configuration
+.env
+
+# Ignore local development settings
+local_settings.py
+
+# Ignore logs and temporary files
+logs/
+*.log
+*.pot
+*.pyo
+*.swp
+*.swo
+*.db
+*.sqlite
+
+# Ignore system-specific files
+.DS_Store
+Thumbs.db
+
+# Ignore virtual environment
+venv/
+env/
+
+# Ignore media and static files
+
+
+# Ignore secret key files
+*.key
+
+# Ignore generated files and directories
+node_modules/
+*.pyo
+*.pyc
+*.pyd
+__pycache__/
+
+# Ignore coverage reports
+.coverage
+htmlcov/
+
+# Ignore pipenv files
+Pipfile
+Pipfile.lock

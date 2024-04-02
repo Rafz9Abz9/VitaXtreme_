@@ -1,0 +1,123 @@
+{% extends 'base/base.html' %}
+{% block title%}Login - Register{% endblock%}
+{% load static %}
+
+
+{% block main %}
+<nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Login</li>
+        </ol>
+    </div><!-- End .container -->
+</nav><!-- End .breadcrumb-nav -->
+
+<div class="login-page bg-image pt-8 pb-8 pt-md-12 pb-md-12 pt-lg-17 pb-lg-17" style="background-image: url({% static 'images/backgrounds/login_bg.jpg' %})">
+    <div class="container">
+        <div class="form-box">
+            <div class="form-tab">
+                <ul class="nav nav-pills nav-fill" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link {% if current_tab == 'login' %}active {%endif%}" id="signin-tab-2" data-toggle="tab" href="#signin-2" role="tab" aria-controls="signin-2" aria-selected="false">Sign In</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link {% if current_tab == 'register' %}active {%endif%}" id="register-tab-2" data-toggle="tab" href="#register-2" role="tab" aria-controls="register-2" aria-selected="true">Register</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane fade {% if current_tab == 'login' %}show active {%endif%}" id="signin-2" role="tabpanel" aria-labelledby="signin-tab-2">
+                        <form action="{% url 'login' %}" method="POST">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="login-email">Email Address *</label>
+                                {{ login_form.email }}
+                                <p class="text-danger">
+                                    {{ login_form.errors.email }}
+                                 </p>
+                            </div><!-- End .form-group -->
+
+                            <div class="form-group">
+                                <label for="login-password">Password *</label>
+                                {{ login_form.password }}
+                                <p class="text-danger">
+                                    {{ login_form.errors.password }}
+                                 </p>
+                            </div><!-- End .form-group -->
+
+                            <div class="form-footer">
+                                <button type="submit" class="btn btn-outline-primary-2">
+                                    <span>LOG IN</span>
+                                    <i class="icon-long-arrow-right"></i>
+                                </button>
+                                <a href="#" class="forgot-link" data-toggle="modal" data-target="#forgotPassword">Forgot Your Password?</a>
+
+                            </div><!-- End .form-footer -->
+                        </form>
+                    </div><!-- .End .tab-pane -->
+                    {% include 'includes/modals/forgot_password_modal.html' %}<!-- End forgot password modal -->
+                    <div class="tab-pane fade {% if current_tab == 'register' %}show active {%endif%}" id="register-2" role="tabpanel" aria-labelledby="register-tab-2">
+                        <form action="{% url 'register' %}" method="POST">
+                            {% csrf_token %}
+                            <div class="form-group text-danger">
+                                <label>Your Email Address *</label>
+                                {{ reg_form.email }}
+                                <p class="text-danger">
+                                    {{ reg_form.errors.email }}
+                                 </p>
+                            </div><!-- End .form-group -->
+
+                            <div class="form-group text-danger">
+                                <label>Password *</label>
+                                {{ reg_form.password1 }}
+                                <p class="text-danger">
+                                    {{ reg_form.errors.password1 }}
+                                 </p>
+                            </div><!-- End .form-group -->
+
+                            <div class="form-group text-danger">
+                                <label>Confirm Password *</label>
+                                {{ reg_form.password2 }}
+                                <p class="text-danger">
+                                    {{ reg_form.errors.password2 }}
+                                 </p>
+                            </div><!-- End .form-group -->
+
+                            <div class="form-footer text-danger">
+                                <button id="submitBtn" type="submit" class="btn btn-outline-primary-2" disabled >
+                                    <span>SIGN UP</span>
+                                    <i class="icon-long-arrow-right"></i>
+                                </button>
+
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="agreeCheckbox" required name="agree_checkbox">
+                                    <label class="custom-control-label" for="agreeCheckbox">I agree to the <a href="#" data-toggle="modal" data-target="#privacyPolicy">privacy policy</a> *</label>
+                                    {% include 'includes/modals/privacy_policy_modal.html' %}
+                                </div><!-- End .custom-checkbox -->
+                            </div><!-- End .form-footer -->
+                        </form>
+                    </div><!-- .End .tab-pane -->
+                </div><!-- End .tab-content -->
+            </div><!-- End .form-tab -->
+        </div><!-- End .form-box -->
+    </div><!-- End .container -->
+</div><!-- End .login-page section-bg -->
+{% endblock %}
+
+{% block extrascripts %}
+<script>
+    var agreeCheckbox = document.getElementById('agreeCheckbox');
+    var submitButton = document.getElementById('submitBtn');
+    agreeCheckbox.addEventListener('change', function () {
+      submitButton.disabled = !agreeCheckbox.checked;
+    });
+
+     {% comment %} To Trigger reset Password Form {% endcomment %}
+     $('#forgotPasswordBtn').click(function (e) {
+        e.preventDefault();
+        $('#forgotPasswordForm').submit();
+        
+    });
+   
+</script>
+{% endblock %}

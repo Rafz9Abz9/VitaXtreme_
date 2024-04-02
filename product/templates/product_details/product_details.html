@@ -1,0 +1,327 @@
+{% extends 'base/base.html' %}
+{% block title%}Products{% endblock %}
+{% load static %}
+{% load cart_tag %}
+
+
+{% block main %}
+<nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
+    <div class="container-fluid d-flex align-items-center">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">Products</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Product name</li>
+        </ol>
+
+        <nav class="product-pager ml-auto" aria-label="Product">
+            <a class="product-pager-link product-pager-prev" href="#" aria-label="Previous" tabindex="-1">
+                <i class="icon-angle-left"></i>
+                <span>Prev</span>
+            </a>
+
+            <a class="product-pager-link product-pager-next" href="#" aria-label="Next" tabindex="-1">
+                <span>Next</span>
+                <i class="icon-angle-right"></i>
+            </a>
+        </nav><!-- End .pager-nav -->
+    </div><!-- End .container-fluid -->
+</nav><!-- End .breadcrumb-nav -->
+
+<div class="page-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-10">
+                <div class="product-details-top">
+                    <div class="row">
+                        <div class="col-md-6 col-lg-7">
+                            <div class="product-gallery">
+                                <figure class="product-main-image">
+                                    <img id="product-zoom" src="{{ product.images.all|access_list:0|image_url }}" data-zoom-image="{{ product.images.all|access_list:0|image_url }}" alt="{{product.images.all|access_list:0|image_caption}}" />
+
+                                    <a href="#" id="btn-product-gallery" class="btn-product-gallery">
+                                        <i class="icon-arrows"></i>
+                                    </a>
+                                </figure><!-- End .product-main-image -->
+
+                                <div id="product-zoom-gallery" class="product-image-gallery max-col-6">
+                                    {% for image in product.images.all%}
+                                        <a href="{{image|image_url}}" class="product-gallery-item" target="blank">
+                                            <img src="{{image|image_url}}" alt="product desc">
+                                        </a>
+                                    {% endfor %}
+
+                                </div><!-- End .product-image-gallery -->
+                            </div><!-- End .product-gallery -->
+                        </div><!-- End .col-lg-7 -->
+
+                        <div class="col-md-6 col-lg-5">
+                            <div class="product-details">
+                                <h1 class="product-title"> {{product.name}}</h1><!-- End .product-title -->
+                                    
+                                <div class="ratings-container">
+                                    <div class="ratings">
+                                        <div class="ratings-val" style="width: {{product.ratings|divide_by:5|multiply_by:100}}%;"></div><!-- End .ratings-val -->
+                                    </div><!-- End .ratings -->
+                                    <a class="ratings-text" href="#product-accordion" id="review-link">
+                                        {% if product.reviews.all|length > 0 %}
+                                            <span class="ratings-text">( {{ product.reviews.all|length}} Reviews )</span>
+                                        {% else %}
+                                            <span class="ratings-text">( 0 Review )</span>
+                                        {% endif %}
+                                    </a>
+                                </div><!-- End .rating-container -->
+
+                                <div class="product-price">
+                                    <span class="new-price">{{product.formatted_price}}</span>
+                                    
+                                </div><!-- End .product-price -->
+
+                                <div class="row"> 
+                                    <div class="col-3 details-filter-row details-row-size">
+                                        <label  class="w-100">In Stock:</label>
+                                        <div class="product-details-quantity">
+                                            {{ product.stock}}
+                                        </div><!-- End .product-details-quantity -->
+                                    </div><!-- End .details-filter-row -->
+    
+                                    <div class="col-3 details-filter-row details-row-size">
+                                        <label  class="w-100">Total Sold:</label>
+                                        <div class="product-details-quantity">
+                                            {{product.sold}}
+                                        </div><!-- End .product-details-quantity -->
+                                    </div><!-- End .details-filter-row -->
+
+                                </div>
+
+                                <div class="details-filter-row details-row-size">
+                                    {% if user.is_authenticated %}  
+                                        {% if not  product.is_in_cart %}  
+                                            <form method="POST" action="{% url 'add_to_cart' %}" id="add_to_cart_form">
+                                                {% csrf_token %}
+                                                <label for="{product.id}}3">Qty:</label>
+                                                <input type="hidden" id="{{product.id}}" name="product_id" value="{{product.id}}">
+                                                <input type="number" id="{product.id}}3" name="qty" class="form-control" value="1" min="1" max="10" step="1" data-decimals="0" required>                          
+                                            </form><!-- End .product-details-quantity -->
+                                        {%endif%}
+                                    {%else%}
+                                        {% if not product|is_in_cart:request.session.carts%}                                       
+                                            <form method="POST" action="{% url 'add_to_cart' %}" id="add_to_cart_form">
+                                                {% csrf_token %}
+                                                <label for="{product.id}}3">Qty:</label>
+                                                <input type="hidden" id="{{product.id}}" name="product_id" value="{{product.id}}">
+                                                <input type="number" id="{product.id}}3" name="qty" class="form-control" value="1" min="1" max="10" step="1" data-decimals="0" required>                          
+                                            </form><!-- End .product-details-quantity -->
+                                        {%endif%}
+                                    {% endif %}
+                                </div><!-- End .details-filter-row -->
+
+                                
+                                <div class="product-details-action">
+                                    {% if user.is_authenticated %}
+                                        {% if not product.is_in_cart%}
+                                            <input type="submit" class="btn-product btn-cart px-4 mb-1" id="btn-add-cart" value="Add to Cart" >
+                                        {% else %}
+                                            <a href="{% url 'remove_from_cart' product_id=product.id %}" class="btn-product btn-cart"><span>remove from cart</span></a>
+                                        {% endif %} 
+                                    {% else %}
+                                        {% if not product|is_in_cart:request.session.carts %} 
+                                            <input type="submit" class="btn-product btn-cart px-4 mb-1" id="btn-add-cart" value="Add to Cart" >
+                                        {% else %}
+                                            <a href="{% url 'remove_from_cart' product_id=product.id %}" class="btn-product btn-cart"><span>remove from cart</span></a>
+                                        {% endif %} 
+                                    {% endif %}   
+
+                                    <div class="details-action-wrapper">
+                                        {% if product.is_in_wishlist%}
+                                            <a href="{% url 'remove_from_wishlist' product_id=product.id%}" class="btn-product remove_wishlist" title="Wishlist"><span>Remove from Wishlist</span></a>
+                                        {% else %}
+                                            <a href="{% url 'add_to_wishlist' product_id=product.id%}" class="btn-product btn-wishlist" title="Wishlist"><span>Add to Wishlist </span></a>
+                                        {% endif %}
+                                        {%if user.is_authenticated%}
+                                            <a href="#" data-toggle="modal" data-target="#addReviewModal" class="btn-product btn-review" title="add review"><span>Add Review </span></a>
+                                        {%endif%}
+                                    </div><!-- End .details-action-wrapper -->
+                                </div><!-- End .product-details-action -->
+                                {% include 'includes/modals/add_review_modal.html' with product=product%}
+
+                                <div class="product-details-footer">
+                                    <div class="product-cat">
+                                        <span>Category:</span>
+                                        <a href="#">{{product.category.friendly_name}}</a>
+                                    </div><!-- End .product-cat -->
+
+                                    <div class="social-icons social-icons-sm">
+                                        <span class="social-label">Share:</span>
+                                        <a href="#" class="social-icon" title="Facebook" target="_blank"><i class="icon-facebook-f"></i></a>
+                                        <a href="#" class="social-icon" title="Twitter" target="_blank"><i class="icon-twitter"></i></a>
+                                        <a href="#" class="social-icon" title="Instagram" target="_blank"><i class="icon-instagram"></i></a>
+                                        <a href="#" class="social-icon" title="Pinterest" target="_blank"><i class="icon-pinterest"></i></a>
+                                    </div>
+                                </div><!-- End .product-details-footer -->
+
+                                <div class="accordion accordion-plus product-details-accordion" id="product-accordion">
+                                    <div class="card card-box card-sm">
+                                        <div class="card-header" id="product-desc-heading">
+                                            <h2 class="card-title">
+                                                <a class="collapsed" role="button" data-toggle="collapse" href="#product-accordion-desc" aria-expanded="false" aria-controls="product-accordion-desc">
+                                                    Description
+                                                </a>
+                                            </h2>
+                                        </div><!-- End .card-header -->
+                                        <div id="product-accordion-desc" class="collapse" aria-labelledby="product-desc-heading" data-parent="#product-accordion">
+                                            <div class="card-body">
+                                                <div class="product-desc-content">
+                                                    {{product.description}}
+                                                </div><!-- End .product-desc-content -->
+                                            </div><!-- End .card-body -->
+                                        </div><!-- End .collapse -->
+                                    </div><!-- End .card -->
+
+                                    <div class="card card-box card-sm">
+                                        <div class="card-header" id="product-info-heading">
+                                            <h2 class="card-title">
+                                                <a class="collapsed" role="button" data-toggle="collapse" href="#product-accordion-info" aria-expanded="false" aria-controls="product-accordion-info">
+                                                    Additional Information
+                                                </a>
+                                            </h2>
+                                        </div><!-- End .card-header -->
+                                        <div id="product-accordion-info" class="collapse" aria-labelledby="product-info-heading" data-parent="#product-accordion">
+                                            <div class="card-body">
+                                                <div class="product-desc-content">
+                                                    {{product.ingredients}}
+                                                </div><!-- End .product-desc-content -->
+                                            </div><!-- End .card-body -->
+                                        </div><!-- End .collapse -->
+                                    </div><!-- End .card -->
+
+                                    <div class="card card-box card-sm">
+                                        <div class="card-header" id="product-shipping-heading">
+                                            <h2 class="card-title">
+                                                <a class="collapsed" role="button" data-toggle="collapse" href="#product-accordion-shipping" aria-expanded="false" aria-controls="product-accordion-shipping">
+                                                    Shipping & Returns
+                                                </a>
+                                            </h2>
+                                        </div><!-- End .card-header -->
+                                        <div id="product-accordion-shipping" class="collapse" aria-labelledby="product-shipping-heading" data-parent="#product-accordion">
+                                            <div class="card-body">
+                                                <div class="product-desc-content">
+                                                    <p>We deliver to over 100 countries around the world. For full details of the delivery options we offer, please view our <a href="#">Delivery information</a><br>
+                                                    We hope you’ll love every purchase, but if you ever need to return an item you can do so within a month of receipt. For full details of how to make a return, please view our <a href="#">Returns information</a></p>
+                                                </div><!-- End .product-desc-content -->
+                                            </div><!-- End .card-body -->
+                                        </div><!-- End .collapse -->
+                                    </div><!-- End .card -->
+
+                                    <div class="card card-box card-sm">
+                                        <div class="card-header" id="product-review-heading">
+                                            <h2 class="card-title">
+                                                <a role="button" data-toggle="collapse" href="#product-accordion-review" aria-expanded="true" aria-controls="product-accordion-review">
+                                                    Reviews ({{ product.reviews.all|length}})
+                                                </a>
+                                            </h2>
+                                        </div><!-- End .card-header -->
+                                        <div id="product-accordion-review" class="collapse show" aria-labelledby="product-review-heading" data-parent="#product-accordion">
+                                            <div class="card-body">
+                                                <div class="reviews">
+                                                    {% if product.reviews.all%}
+                                                        {% for review in product.reviews.all|order_by_date %}       
+                                                            <div class="review">
+                                                                <div class="row no-gutters">
+                                                                    <div class="col-auto">
+                                                                        <h4><a href="#">{{review.full_name}}</a></h4>
+                                                                        <div class="ratings-container">
+                                                                            <div class="ratings">
+                                                                                <div class="ratings-val" style="width: {{review.ratings|divide_by:5|multiply_by:100}}%;"></div><!-- End .ratings-val -->
+                                                                            </div><!-- End .ratings -->
+                                                                        </div><!-- End .rating-container -->
+                                                                        <span class="review-date">{{review.created_at}}</span>
+                                                                    </div><!-- End .col -->
+                                                                    <div class="col">
+                                                                        <h4>{{ review.title}}</h4>
+
+                                                                        <div class="review-content">
+                                                                            <p>{{review.content}}</p>
+                                                                        </div><!-- End .review-content -->
+                                                                    </div><!-- End .col-auto -->
+                                                                </div><!-- End .row -->
+                                                            </div><!-- End .review -->
+                                                        {% endfor %}
+                                                    {% else %}
+                                                        <div class="review">No Reviews Yet</div>
+                                                    {% endif %}
+                                                </div><!-- End .reviews -->
+                                            </div><!-- End .card-body -->
+                                        </div><!-- End .collapse -->
+                                    </div><!-- End .card -->
+                                </div><!-- End .accordion -->
+                            </div><!-- End .product-details -->
+                        </div><!-- End .col-lg-5 -->
+                    </div><!-- End .row -->
+                </div><!-- End .product-details-top -->
+            </div><!-- End .col-xl-10 -->
+
+            <aside class="col-xl-2 d-md-none d-xl-block">
+                <div class="sidebar sidebar-product">
+                    <div class="widget widget-products">
+                        <h4 class="widget-title">Related Product</h4><!-- End .widget-title -->
+                        {% if related_product|length > 0 %}
+                            {% for product in related_product %}
+                                <div class="products">
+                                    <div class="product product-sm">
+                                        <figure class="product-media">
+                                            <a href="{% url 'product_details' product_id=product.id%}">
+                                                <img src="{{ product.images.all|access_list:0|image_url }} " alt="Product image" class="product-image" />
+                                            </a>
+                                        </figure>
+
+                                        <div class="product-body">
+                                            <h5 class="product-title"><a href="{% url 'product_details' product_id=product.id%}">{{ product.name }}</a></h5><!-- End .product-title -->
+                                            <div class="product-price">
+                                                <span class="new-price">{{product.formatted_price}}</span>
+                                            </div><!-- End .product-price -->
+                                        </div><!-- End .product-body -->
+                                    </div><!-- End .product product-sm -->
+                                </div><!-- End .products -->
+                            {% endfor %}
+                        {% endif %}
+
+                        <a href="/products/?category={{product.category.name}}" class="btn btn-outline-dark-3"><span>View More Related Products</span><i class="icon-long-arrow-right"></i></a>
+                    </div><!-- End .widget widget-products -->
+                </div><!-- End .sidebar sidebar-product -->
+            </aside><!-- End .col-xl-2 -->
+        </div><!-- End .row -->
+
+    </div><!-- End .container-fluid -->
+</div><!-- End .page-content -->
+{% endblock%}
+
+{% block extrascripts %}  
+
+<script>
+    $('#btn-add-cart').click(function (e) {
+            e.preventDefault();
+            $('#add_to_cart_form').submit();
+    });
+
+    $('#add_review').click(function (e) {
+        e.preventDefault();
+        // Check form validity
+        if ($('#add_review_form')[0].checkValidity()) {
+            // If the form is valid, submit it
+            $('#add_review_form').submit();
+        } else {
+            $('#add_review_form :input').each(function () {
+                if (!this.validity.valid) {
+                    // Set custom validity message based on your requirements
+                    this.setCustomValidity('This field is required.');
+                }
+            });
+            
+            // Trigger form validation again to display custom messages
+            $('#add_review_form')[0].reportValidity();
+        }
+    });
+
+</script>
+
+{% endblock %}

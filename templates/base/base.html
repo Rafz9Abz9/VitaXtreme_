@@ -1,0 +1,109 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+
+<!-- molla/index-2.html  22 Nov 2019 09:55:32 GMT -->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="keywords" content="
+    Women's care, Hair essentials, Baby care, Premium skincare, Men's grooming, Self-care items, Beauty &amp; wellness, Personal care, Skincare, Natural baby, Haircare, Men's care, Beauty products, Organic skincare, Family care, Radiant skin, Hair innovations, Gentle baby, Sustainable beauty, Self-care essentials.">
+    <meta name="description" content="Essence - Elevate your self-care routine with premium women's, hair, baby, skin, and men's care products available at Essence.">
+    <meta name="author" content="Rafah Ramoni">
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/icons/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static "images/icons/favicon-32x32.png" %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/icons/favicon-16x16.png'%}">
+    <link rel="manifest" href="{% static "images/icons/site.html" %}">
+    <link rel="mask-icon" href="{% static "images/icons/safari-pinned-tab.svg" %}" color="#666666">
+    <link rel="shortcut icon" href="{% static 'images/icons/favicon.png' %}">
+    <meta name="apple-mobile-web-app-title" content="Essence">
+    <meta name="application-name" content="Essence">
+    <meta name="msapplication-TileColor" content="#cc9966">
+    <meta name="msapplication-config" content="{% static 'images/icons/browserconfig.xml' %}">
+    <meta name="theme-color" content="#ffffff">
+    <!-- Plugins CSS File -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/plugins/owl-carousel/owl.carousel.css' %}">
+    <link rel="stylesheet" href="{% static 'css/plugins/magnific-popup/magnific-popup.css' %}">
+    <!-- Main CSS File -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+   
+    {% block extracss %}
+    {% endblock %}
+    <title>Essence | {% block title %}{% endblock %}</title>
+</head>
+
+<body>
+
+        <div class="page-wrapper">
+            {% include 'includes/header/header.html' %}
+            {{search_result}} 
+            {% if messages %}
+                {% for message in messages %}
+                    {% with message.level as level %}
+                        {% if level == 40 %}
+                            {% include 'includes/messages/error_message.html' %}
+                        {% elif level == 30 %}
+                            {% include 'includes/messages/warning_message.html' %}
+                        {% elif level == 25 %}
+                            {% include 'includes/messages/success_message.html' %}
+                        {% else %}
+                            {% include 'includes/messages/info_message.html' %}
+                        {%  endif  %}
+                    {% endwith %}
+                {% endfor %}
+            {%  endif  %}
+     
+            <main class="main">
+                {% block main %}
+                {% endblock %}
+            </main><!-- End .main -->
+
+            {% include 'includes/footer/footer.html' %}
+        </div>
+        <button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
+        {% include 'includes/mobile_menu/mobile_menu.html' %}
+
+        <!-- Plugins JS File -->
+        <script src="https://js.stripe.com/v3/"></script>
+        <script src="{% static 'js/jquery.min.js' %}"></script>
+        <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+        <script src="{% static 'js/jquery.hoverIntent.min.js' %}"></script>
+        <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+        <script src="{% static 'js/superfish.min.js' %}"></script>
+        <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+        <script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+        <!-- Main JS File -->
+        <script src="{% static 'js/main.js' %}"></script>
+        
+        {% block extrascripts %}
+        {% endblock %}
+        
+        <script>
+            const options = {
+                delay: 8000, 
+                autohide: true,
+            }
+
+            $('.toast').toast(options);
+            $('.toast').toast('show');
+            
+        </script>
+
+        
+        <script >
+            $('.q').keypress(function (e) {
+                 if (e.which === 13) {
+                     e.preventDefault();
+                     $('.search-form').submit();
+                 }
+             });
+         </script>
+</body>
+
+</html>

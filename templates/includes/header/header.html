@@ -1,0 +1,164 @@
+{% load static %}
+<header class="header">
+    <div class="header-top">
+        <div class="container">
+            <div class="header-left">
+                
+            </div><!-- End .header-left -->
+
+            <div class="header-right">
+                <ul class="top-menu">
+                    <li>
+                        <a href="#">Links</a>
+                        <ul>
+                            <li><a href="tel:#"><i class="icon-phone"></i>Call: +353 89 567 9745</a></li>
+
+                            {% if user.is_authenticated %}
+                                <li><a href="{% url 'logout' %}">Logout</a></li>
+                            {% else  %}
+                                <li><a href="{% url 'user_auth' %}">Login</a></li>
+                            {% endif %}
+                             {% comment%} TODO // user name {% endcomment %}
+                        </ul>
+                    </li>
+                </ul><!-- End .top-menu -->
+            </div><!-- End .header-right -->
+        </div><!-- End .container -->
+    </div><!-- End .header-top -->
+
+    <div class="header-middle sticky-header">
+        <div class="container">
+            <div class="header-left">
+                <button class="mobile-menu-toggler">
+                    <span class="sr-only">Toggle mobile menu</span>
+                    <i class="icon-bars"></i>
+                </button>
+
+                <a href="{% url 'home' %}" class="logo">
+                    <img src="{% static 'images/logo.png' %}" alt="Molla Logo" width="105" height="25">
+                </a>
+
+                <nav class="main-nav">
+                    <ul class="menu sf-arrows">
+                        <li class="megamenu-container {% if request.path == '/'%} active {% endif %}">
+                            <a href="{% url 'home' %}" class="">Home</a>
+                        </li>
+                        <li class="{% if request.path == '/about-us'%} active {% endif %}">
+                            <a href="{% url 'about' %}" class="">About Us</a>
+                        </li>
+                        <li  class="{% if request.path == '/products' %} active {% endif %}">
+                            <a href="#" class="sf-with-ul">Products</a>
+
+                            <div class="megamenu megamenu-sm">
+                                <div class="row no-gutters">
+                                    <div class="col-md-6">
+                                        <div class="menu-col">
+                                            <div class="menu-title">Product Details</div><!-- End .menu-title -->
+                                            <ul>
+                                                <li><a href="{% url 'products' %}">All Products</a></li>
+                                                {% if categories %}
+                                                    {% for category in  categories %}
+                                                        <li><a href="/products/?category={{category.name}}">{{category.friendly_name}}</a></li>
+                                                    {% endfor %}
+                                                {% endif %}
+                                            </ul>
+                                        </div><!-- End .menu-col -->
+                                    </div><!-- End .col-md-6 -->
+
+                                </div><!-- End .row -->
+                            </div><!-- End .megamenu megamenu-sm -->
+                        </li>
+                        <li  class="{% if request.path == '/contact-us'%} active {% endif %}">
+                            <a href="{% url 'contact' %}" class="">Contact Us</a>
+                        </li>
+                        
+                    </ul><!-- End .menu -->
+                </nav><!-- End .main-nav -->
+            </div><!-- End .header-left -->
+
+            <div class="header-right  position-relative">
+                <div class="header-search dropdown">
+                    <a href="#" class="search-toggle " role="button" title="Search"><i class="icon-search"></i></a>
+                    <form class="search-form" action="{% url 'products' %}" method="GET">
+                        <div class="header-search-wrapper">
+                            <label for="q" class="sr-only">Search</label>
+                            <input value="{{search_term}}" type="search" class="form-control q" name="q" placeholder="Search in..." />
+                        </div><!-- End .header-search-wrapper -->
+                    </form>
+
+                    
+                </div><!-- End .header-search -->
+
+                <div class="dropdown cart-dropdown mr-3">
+                    <a href="#" class="dropdown-toggle cart" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+                        <i class="icon-shopping-cart"></i>
+                        <span class="cart-count">{{cart_itmes_count}}</span>
+                    </a>
+                    {%if reduced_cart_item%}
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <div class="dropdown-cart-products">
+                            {%if reduced_cart_item%}
+                                {%for item in reduced_cart_item %}
+                                <div class="product">
+                                    <div class="product-cart-details">
+                                        <h4 class="product-title">
+                                            <a href="product.html">{{item.product.name}}</a>
+                                        </h4>
+
+                                        <span class="cart-product-info">
+                                        {{item.quantity}} x {{item.product.formatted_price}}
+                                        </span>
+                                    </div><!-- End .product-cart-details -->
+
+                                    <figure class="product-image-container">
+                                        <a href="product.html" class="product-image">
+                                            <img src="{{ item.product.images.all|access_list:0|image_url }}" alt="product">
+                                        </a>
+                                    </figure>
+                                    <a href="{%url 'remove_from_cart' product_id=item.product.id%}" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
+                                </div><!-- End .product -->
+                                {%endfor%}
+                            {%else%}
+                                <div class="product text-center">No Item in Cart</div>
+                            {% endif %}
+                        </div><!-- End .cart-product -->
+
+                        {%if formatted_sub_total_price %}
+                            <div class="dropdown-cart-total">
+                                <span>Total</span>
+
+                                <span class="cart-total-price">{{formatted_sub_total_price}}</span>
+                        </div><!-- End .dropdown-cart-total -->
+                        {% endif %}
+                        <div class="dropdown-cart-action ">
+                            <a href="{% url 'cart' %}" class="btn btn-primary w-100">View Cart</a>
+                        </div><!-- End .dropdown-cart-total -->
+                    </div><!-- End .dropdown-menu -->
+                    {%endif%}
+                </div><!-- End .cart-dropdown -->
+
+                <ul class="d-flex mb-0 align-items-center justify-content-between w-100 h-100">
+                    <li class="wishlist-icon ml-2 mr-3"><a href="{% url 'wishlist' %}"><i class="icon-heart-o"></i><span>{{wishlist_items_count}}</span></a></li>
+                    <li class="user-icon  drop-left">
+                        <a href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"><i class="icon-user"></i></a>
+
+                        <div id="userDropdown" class="dropdown-menu p-1 px-5" aria-labelledby="userDropdown">
+                            <ul>
+                                {% if user.is_authenticated %}
+                                    <li><a href="{% url 'user_profile' %}">Profile</a></li>
+                                    <li><a href="{% url 'logout' %}">Logout</a></li>
+                                {% else  %}
+                                    <li><a href="{% url 'user_auth' %}">Login</a></li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </li> 
+                </ul>
+            </div><!-- End .header-right -->
+        </div><!-- End .container -->
+    </div><!-- End .header-middle -->
+</header><!-- End .header -->
+
+
+
+

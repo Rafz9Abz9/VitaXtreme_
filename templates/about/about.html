@@ -1,0 +1,95 @@
+{% extends 'base/base.html' %}
+{% block title%}About Us{% endblock %}
+{% load static %}
+
+{% block main %}
+<nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">Pages</a></li>
+            <li class="breadcrumb-item active" aria-current="page">About us</li>
+        </ol>
+    </div><!-- End .container -->
+</nav><!-- End .breadcrumb-nav -->
+<div class="container">
+    <div class="page-header page-header-big text-center" style="background-image: url({% static 'images/about-header_bg1.jpg'%})">
+        <h1 class="page-title text-white">About us<span class="text-white">Who we are</span></h1>
+    </div><!-- End .page-header -->
+</div><!-- End .container -->
+
+<div class="page-content pb-0">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 mb-3 mb-lg-0">
+                <h2 class="title">Our Vision</h2><!-- End .title -->
+                <p>Empowering self-expression and well-being, Essence envisions a space where beauty meets simplicity. We strive to curate a collection that resonates with your unique essence, offering high-quality, accessible beauty and wellness products. Our vision is to inspire confidence, self-love, and authenticity in every customer, making Essence the go-to destination for a streamlined and joyful self-care experience.</p>
+            </div><!-- End .col-lg-6 -->
+            
+            <div class="col-lg-6">
+                <h2 class="title">Our Mission</h2><!-- End .title -->
+                <p>Empowering beauty and well-being, Essence is on a mission to deliver accessible, high-quality care products tailored to diverse needs. Through sustainable practices, we inspire confidence and authenticity. Join us in creating a community where self-care is joyful and every Essence purchase reflects a step towards a more beautiful and empowered you.</p>
+            </div><!-- End .col-lg-6 -->
+        </div><!-- End .row -->
+
+        <div class="mb-5"></div><!-- End .mb-4 -->
+    </div><!-- End .container -->
+
+    <div class="bg-light-2 pt-6 pb-5 mb-6 mb-lg-8">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5 mb-3 mb-lg-0">
+                    <h2 class="title">Who We Are</h2><!-- End .title -->
+                    <p class="mb-2">Essence is more than a brand; we are your partners in self-care. Committed to simplicity and quality, we curate a collection of hair care, baby care, men's care, and skin care essentials. At Essence, we believe in the power of authenticity and the joy of embracing your unique essence. Join us on this journey towards beauty, well-being, and confidence.</p>
+                </div><!-- End .col-lg-5 -->
+
+                <div class="col-lg-6 offset-lg-1">
+                    <div class="about-images">
+                        <img src="{% static 'images/about/about-us_img1.jpg'%}" alt="" class="about-img-front">
+                    </div><!-- End .about-images -->
+                </div><!-- End .col-lg-6 -->
+            </div><!-- End .row -->
+        </div><!-- End .container -->
+    </div><!-- End .bg-light-2 pt-6 pb-6 -->
+
+    <div class="mb-2"></div><!-- End .mb-2 -->
+
+    <div class="about-testimonials bg-light-2 pt-6 pb-6">
+        <div class="container">
+            <h2 class="title text-center mb-3">What Customer Say About Us</h2><!-- End .title text-center -->
+
+            <div class="owl-carousel owl-simple owl-testimonials-photo" data-toggle="owl" 
+                data-owl-options='{
+                    "nav": false, 
+                    "dots": true,
+                    "margin": 20,
+                    "loop": false,
+                    "responsive": {
+                        "1200": {
+                            "nav": true
+                        }
+                    }
+                }'>
+                <blockquote class="testimonial text-center">
+                    <img src="{% static 'images/testimonials/jen.jpg'%}" alt="user">
+                    <p>“ Absolutely love Essence! Their hair care products are a game-changer. My curls have never looked this good. A definite go-to for all things beauty!”</p>
+                    <cite>
+                        Jen
+                        <span>Customer</span>
+                    </cite>
+                </blockquote><!-- End .testimonial -->
+
+                <blockquote class="testimonial text-center">
+                    <img src="{% static 'images/testimonials/victor.webp'%}" alt="user">
+                    <p>“ As a guy who's particular about grooming, Essence delivers on men's care. Their products are top-notch, and I appreciate the simplicity in their range. ”</p>
+
+                    <cite>
+                        Victor
+                        <span>Customer</span>
+                    </cite>
+                </blockquote><!-- End .testimonial -->
+            </div><!-- End .testimonials-slider owl-carousel -->
+        </div><!-- End .container -->
+    </div><!-- End .bg-light-2 pt-5 pb-6 -->
+</div><!-- End .page-content -->
+{% endblock %}

@@ -1,0 +1,125 @@
+.wishlist-icon, .cart {
+    position: relative;
+}
+
+
+.wishlist-icon a, .user-icon a{
+    color: #333 !important;
+}
+.wishlist-icon a i, .user-icon a i{
+    font-size:3rem;
+}
+
+.wishlist-icon a span{
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    min-width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 2;
+    margin-left: 0.2rem;
+    margin-top: 0.1rem;
+    color: #fff;
+    background-color: #c96;
+}
+.wishlist-icon a span, .cart .cart-count{
+    position: absolute;
+    top: 0;
+    right: -8px;
+}
+
+.cart .cart-count{
+    top: -8px;
+}
+
+.user-icon ul li a{
+    font-size: 1.5rem ;
+}
+.user-icon ul li a:hover{
+    color: #c96 !important;
+}
+
+
+.table .review-col {
+    width: 280px;
+    color: #333;
+    font-weight: 400;
+    font-size: 1.6rem;
+}
+
+.toast-danger{
+    border-top: 4px solid #dc3545!important;
+}
+
+.toast-info{
+    border-top: 4px solid #17a2b8!important;
+}
+
+.toast-Success{
+    border-top: 4px solid #28a745!important;
+}
+
+.toast-warning{
+    border-top: 4px solid #ffc107!important;
+}
+
+.search_result{
+    width:270px;
+    position: absolute;
+    right: -10px;
+    margin-top: 10px;
+    padding:15px;
+    z-index: 300;
+    background-color: #fff;
+}
+.search_result ul li a{
+}
+
+.details-action-wrapper .btn-product.remove_wishlist:before {
+    margin-top: -0.2rem;
+}
+
+
+.product.product-list .product-body .remove_wishlist {
+    top: 3.1rem;
+}
+
+.product-body .remove_wishlist {
+    position: absolute;
+    top: 3.4rem;
+    right: 2rem;
+    color: #ccc;
+    padding: 0;
+    margin: 0;
+    background: none;
+}
+
+.remove_wishlist.btn-product{
+    color: #c96 !important;
+}
+
+.remove_wishlist{
+    font-size: 1.6rem;
+    color: #c96 !important;
+}
+.remove_wishlist::before{
+    color: #c96 !important;
+    content: '\f234';
+}
+
+.btn-review::before{
+    color: #c96 !important;
+    content: "\f318" ;
+}
+
+
+
+@media screen and (min-width: 768px){
+    .modal-dialog {
+        max-width:80%;
+    }
+
+}

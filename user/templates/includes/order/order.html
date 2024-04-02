@@ -1,0 +1,40 @@
+{% load static %}
+<table class="table table-wishlist table-mobile">
+    <thead>
+        <tr>
+            <th>Order Number</th>
+            <th>Product</th>
+            <th>Cost</th>
+            <th>Order Status</th>
+            <th>Order Date</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% if orders %}
+            {%for order in orders%}
+                {%for item in order.lineitems.all%}
+                <tr>
+                    <td class="price-col">{{order.order_number}}</td>
+                    <td class="product-col">
+                        <div class="product">
+                            <figure class="product-media">
+                                <a href="{{item.product.images.all|access_list:0|image_url}}">
+                                    <img src="{{item.product.images.all|access_list:0|image_url}}" alt="Product image" width="40">
+                                </a>
+                            </figure>
+
+                            <h3 class="product-title">
+                                <a href="#"><small>{{item.product.name}}</small></a>
+                            </h3><!-- End .product-title -->
+                        </div><!-- End .product -->
+                    </td>
+                    <td class="price-col">{{item.quantity}} x {{item.product.formatted_price}}</td>
+                    <td class="stock-col"><span class="in-stock">{{order.status}}</span></td>
+                    <td class="">{{order.created_at}}</td>
+                </tr>
+                {%endfor%}
+            {% endfor %}
+        {% endif %}
+    </tbody>
+</table><!-- End .table table-wishlist -->

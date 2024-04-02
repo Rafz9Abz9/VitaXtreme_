@@ -1,0 +1,42 @@
+<div class="modal fade"  id="addReviewModal">
+  <div class="modal-dialog" >
+    <div class="modal-content w-100 px-5 py-4">
+      <div class="modal-header">
+        <h5 class="modal-title">{{product.name}} | Add Review</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form class="offset-md-2" method="POST" action="{% url 'add_review' %}" id="add_review_form">
+          {% csrf_token %}
+            <div class="form-group">
+              <label for="full_name">Full Name</label>
+              <input type="text" class="form-control w-100" id="full_name" name="full_name" placeholder="Full Name" {%if user.is_authenticated %} value="{{user.first_name}} {{user.last_name}}" {% else %} value="Anonymous" {%endif%} >
+            </div>
+            <div class="form-group">
+              <label for="title">Review Title</label>
+              <input type="text" class="form-control w-75" id="title"  name="title"  required>
+            </div>
+            <div class="form-group">
+              <label for="content">Review Content</label>
+              <textarea  class="form-control w-75" id="content" name="content" required></textarea>
+            </div>
+            <div class="form-group">
+              <label for="rating">Rating</label>
+              <input type="number" min="1" max="5" class="form-control w-75" id="rating" name="rating" required>
+              <small class="text-info mt-2">Note: Min = 1, Max=5 </small>
+              </div>
+              <div class="form-group">
+                <input type="hidden" class="form-control" id="product_id" name="product_id" value="{{product.id}}" />
+              </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary btn-sm" id="add_review">Add Review</button>
+      </div>
+    </div>
+  </div>
+</div>
+

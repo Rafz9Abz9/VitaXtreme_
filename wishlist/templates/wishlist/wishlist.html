@@ -1,0 +1,124 @@
+{% extends 'base/base.html' %}
+{% block title%}Wishlist{% endblock %}
+{% load static %}
+{% load cart_tag %}
+
+{% block main %}
+<nav aria-label="breadcrumb" class="breadcrumb-nav">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{%url 'home' %}">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">Shop</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Wishlist</li>
+        </ol>
+    </div><!-- End .container -->
+</nav><!-- End .breadcrumb-nav -->
+
+<div class="page-content">
+    <div class="container">
+        <table class="table table-wishlist table-mobile">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Stock Status</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% if wishlist_items|length > 0 %}
+                    {% for item in wishlist_items %}
+                        <tr>
+                            <td class="product-col">
+                                <div class="product">
+                                    <figure class="product-media">
+                                        <a href="{{ item.product.images.all|access_list:0|image_url }}" target="_blank">
+                                            <img src="{{ item.product.images.all|access_list:0|image_url }}"  alt="{{item.product.images.all|access_list:0|image_caption}}">
+                                        </a>
+                                    </figure>
+
+                                    <h3 class="product-title">
+                                        <a href="{% url 'product_details' product_id=item.product.id%}">{{item.product.name}}</a>
+                                    </h3><!-- End .product-title -->
+                                </div><!-- End .product -->
+                            </td>
+                            <td class="price-col">{{item.product.formatted_price}}</td>
+                            {% if item.product.stock > 0 %}
+                                <td class="stock-col"><span class="in-stock text-success">In stock</span></td>
+                            {% else %}
+                                <td class="stock-col"><span class="out-stock text-danger">Out of Stock</span></td>
+                            {% endif %}
+                            <td class="action-col">
+                                {% if not item.product.is_in_cart%}
+                                    {% if not item.product|is_in_cart:request.session.carts%} 
+                                        <form method="POST" action="{% url 'add_to_cart' %}">
+                                            {% csrf_token %}
+                                            <div class="product-details-quantity mb-1">
+                                                <input type="hidden" id="product_id" name="product_id" class="form-control" value="{{item.product.id}}">
+                                                <input type="hidden" id="qty" name="qty" class="form-control px-2" value="1" data-decimals="0">
+                                            </div><!-- End .product-details-quantity -->
+                                            <input type="submit" class="btn-product btn-cart py-2 px-3" value="Add to Cart" >
+                                        </form>
+                                    {% else %}
+                                        {{product|is_in_cart:request.session.carts}}
+                                        <a href="{% url 'remove_from_cart' product_id=item.product.id %}" class="btn-product btn-cart"><span>remove from cart</span></a>
+                                    {% endif %}     
+                                {% else %}
+                                    <a href="{% url 'remove_from_cart' product_id=item.product.id %}" class="btn-product btn-cart"><span>remove from cart</span></a>
+                                {% endif %}    
+                            </td>
+                            <td class="remove-col"><a href="{%url 'remove_from_wishlist' product_id=item.product.id%}" class="btn-remove" title="Remove from wishlist"><i class="icon-close"></i></a></td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                <tr class="text-center">No items in your wishlist yet.</tr>
+                {% endif %}
+            </tbody>
+        </table><!-- End .table table-wishlist -->
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                {% if wishlist_items.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link page-link-prev" href="?page=1{% if category %}&category={{ category }}{% endif %}" aria-label="last" >
+                            <span aria-hidden="true"><i class="icon-long-arrow-left"></i></span>First
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link page-link-prev" href="?page={{ wishlist_items.previous_page_number }}{% if category %}&category={{ category }}{% endif %}" aria-label="Previous" >
+                            Prev
+                        </a>
+                    </li>
+                {% endif%}
+                {% for page in wishlist_items.paginator.page_range %}
+                    <li class="page-item{% if page == recipes.number %}active{% endif %}" aria-current="page"><a class="page-link" href="?page={{ page }}{% if category %}&category={{ category }}{% endif %}">{{ page|add:0 }}</a></li>
+                {% endfor %}
+                <li class="page-item-total">of {{ wishlist_items.paginator.num_pages }}</li>
+                {% if wishlist_items.has_next %}
+                    <li class="page-item">
+                        <a class="page-link page-link-next" href="?page={{ wishlist_items.next_page_number }}{% if category %}&category={{ category }}{% endif %}" aria-label="Next">
+                            Next 
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link page-link-next" href="?page={{ wishlist_items.paginator.num_pages }}{% if category %}&category={{ category }}{% endif %}" aria-label="last">
+                            Last <span aria-hidden="true"><i class="icon-long-arrow-right"></i></span>
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+        <div class="wishlist-share">
+            <div class="social-icons social-icons-sm mb-2">
+                <label class="social-label">Share on:</label>
+                <a href="#" class="social-icon" title="Facebook" target="_blank"><i class="icon-facebook-f"></i></a>
+                <a href="#" class="social-icon" title="Twitter" target="_blank"><i class="icon-twitter"></i></a>
+                <a href="#" class="social-icon" title="Instagram" target="_blank"><i class="icon-instagram"></i></a>
+                <a href="#" class="social-icon" title="Youtube" target="_blank"><i class="icon-youtube"></i></a>
+                <a href="#" class="social-icon" title="Pinterest" target="_blank"><i class="icon-pinterest"></i></a>
+            </div><!-- End .soial-icons -->
+        </div><!-- End .wishlist-share -->
+    </div><!-- End .container -->
+</div><!-- End .page-content -->
+{% endblock %}

@@ -1,0 +1,128 @@
+{% extends 'base/base.html' %}
+{% block title%}Contact Us{% endblock %}
+{% load static %}
+
+{% block main %}
+<nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">Pages</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Contact us</li>
+        </ol>
+    </div><!-- End .container -->
+</nav><!-- End .breadcrumb-nav -->
+<div class="container">
+    <div class="page-header page-header-big text-center" style="background-image: url({% static 'images/contact-header_bg1.jpg'%})">
+        <h1 class="page-title text-black">Contact us<span class="text-white">keep in touch with us</span></h1>
+    </div><!-- End .page-header -->
+</div><!-- End .container -->
+
+<div class="page-content pb-0">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 mb-2 mb-lg-0">
+                <h2 class="title mb-1">Contact Information</h2><!-- End .title mb-2 -->
+                <p class="mb-3">Got questions, feedback, or just want to say hello? Reach out to us! Our dedicated team at Essence is here to assist you. Contact us by filling out the form below. Your thoughts matter, and we look forward to hearing from you. Let's stay connected!"</p>
+                <div class="row">
+                    <div class="col-sm-7">
+                        <div class="contact-info">
+                            <h3>The Office</h3>
+
+                            <ul class="contact-list">
+                                <li>
+                                    <i class="icon-map-marker"></i>
+                                    123 Essence Lane, Dublin, D01 AB12, Ireland.
+                                </li>
+                                <li>
+                                    <i class="icon-phone"></i>
+                                    <a href="tel:#">+353 89 567 9745</a>
+                                </li>
+                                <li>
+                                    <i class="icon-envelope"></i>
+                                    <a href="mailto:#">info.essence@gmail.com</a>
+                                </li>
+                            </ul><!-- End .contact-list -->
+                        </div><!-- End .contact-info -->
+                    </div><!-- End .col-sm-7 -->
+
+                    <div class="col-sm-5">
+                        <div class="contact-info">
+                            <h3>The Office</h3>
+
+                            <ul class="contact-list">
+                                <li>
+                                    <i class="icon-clock-o"></i>
+                                    <span class="text-dark">Monday-Saturday</span> <br>11am-7pm
+                                </li>
+                                <li>
+                                    <i class="icon-calendar"></i>
+                                    <span class="text-dark">Sunday</span> <br>11am-6pm
+                                </li>
+                            </ul><!-- End .contact-list -->
+                        </div><!-- End .contact-info -->
+                    </div><!-- End .col-sm-5 -->
+                </div><!-- End .row -->
+            </div><!-- End .col-lg-6 -->
+            <div class="col-lg-6">
+                <h2 class="title mb-1">Got Any Questions?</h2><!-- End .title mb-2 -->
+                <p class="mb-2">Use the form below to get in touch with the sales team</p>
+
+                <form method="POST" action="{% url 'contact' %}" class="contact-form mb-3">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <label class="sr-only">Name</label>
+                            {{ contact_form.name }}
+                            <p class="text-danger">
+                                {{ contact_form.errors.name }}
+                            </p>
+                        </div><!-- End .col-sm-6 -->
+
+                        <div class="col-sm-6">
+                            <label class="sr-only">Email</label>
+                            {{ contact_form.email }}
+                            <p class="text-danger">
+                                {{ contact_form.errors.email }}
+                            </p>
+                        </div><!-- End .col-sm-6 -->
+                    </div><!-- End .row -->
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <label class="sr-only">Phone</label>
+                            {{ contact_form.phone }}
+                            <p class="text-danger">
+                                {{ contact_form.errors.phone }}
+                            </p>
+                        </div><!-- End .col-sm-6 -->
+
+                        <div class="col-sm-6">
+                            <label class="sr-only">Subject</label>
+                            {{ contact_form.subject }}
+                            <p class="text-danger">
+                                {{ contact_form.errors.subject }}
+                            </p>
+                        </div><!-- End .col-sm-6 -->
+                    </div><!-- End .row -->
+
+                    <label class="sr-only">Message</label>
+                    {{ contact_form.message }}
+                    <p class="text-danger">
+                        {{ contact_form.errors.message }}
+                    </p>
+
+                    <button type="submit" class="btn btn-outline-primary-2 btn-minwidth-sm">
+                        <span>SUBMIT</span>
+                        <i class="icon-long-arrow-right"></i>
+                    </button>
+                </form><!-- End .contact-form -->
+            </div><!-- End .col-lg-6 -->
+        </div><!-- End .row -->
+
+        <hr class="mt-4 mb-5">
+
+       
+    </div><!-- End .container -->
+</div><!-- End .page-content -->
+{% endblock %}

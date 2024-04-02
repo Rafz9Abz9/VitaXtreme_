@@ -1,0 +1,47 @@
+{% load static %}
+<table class="table table-wishlist table-mobile">
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>Review</th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% if reviews %}
+            {%for review in reviews%}
+                <tr>
+                    <td class="product-col">
+                        <div class="product">
+                            <figure class="product-media">
+                                <a href="#">
+                                    <img src="{{ review.product.images.all|access_list:0|image_url }}" alt="Product image">
+                                </a>
+                            </figure>
+
+                            <h3 class="product-title">
+                                <a href="#">{{review.product.name}}</a>
+                            </h3><!-- End .product-title -->
+                        </div><!-- End .product -->
+                    </td>
+                    <td class="review-col">
+                        <h5>{{review.title}}</h5>
+                        <p class="text-wrap">{{review.content}}</p>
+                        <p class="mt-1 d-flex">
+                            <span>Ratings: </span>
+                            <div class="ratings-container">
+                                <div class="ratings">
+                                    <div class="ratings-val" style="width: {{review.ratings|divide_by:5|multiply_by:100}}%;"></div><!-- End .ratings-val -->
+                                </div><!-- End .ratings -->
+                            </div><!-- End .rating-container -->
+                        </p>
+                    </td>
+                    <td class="remove-col"><a href="{% url 'delete_review' review_id=review.id%}" class="btn-remove" title="Delete Review"><i class="icon-close"></i></a></td>
+                </tr>
+            {% endfor %}
+        {% else %}
+            <tr><td>No reviews yet.</td></tr>
+        {% endif %}
+    </tbody>
+</table><!-- End .table table-wishlist -->

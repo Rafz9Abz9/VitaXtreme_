@@ -1,0 +1,340 @@
+{% extends 'base/base.html' %}
+{% block title%}Home{% endblock %}
+{% load static %}
+{% load cart_tag %}
+
+{% block main %}
+<div class="intro-section bg-lighter pt-5 pb-6">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="intro-slider-container slider-container-ratio slider-container-1 mb-2 mb-lg-0">
+                    <div class="intro-slider intro-slider-1 owl-carousel owl-simple owl-light owl-nav-inside" data-toggle="owl" data-owl-options='{
+                        "nav": false, 
+                        "dots": true,
+                        "loop": true,
+                        "autoplay": true,
+                            "responsive": {
+                                "768": {
+                                    "nav": true
+                                }
+                            }
+                        }'>
+                        <div class="intro-slide">
+                            <figure class="slide-image">
+                                <img src="{% static 'images/slider/slide_4_480w.jpg' %}" alt="Image Desc" >
+                            </figure><!-- End .slide-image -->
+
+                            <div class="intro-content">
+                                <h3 class="intro-subtitle">Skin Care Products</h3><!-- End .h3 intro-subtitle -->
+                                <h1 class="intro-title">Upgrade your <br> skincare game.</h1><!-- End .intro-title -->
+                                {% if categories%}
+                                    <a href="products/?category={{categories|access_list:0|get_name}}" class="btn btn-outline-white">
+                                        <span>SHOP NOW</span>
+                                        <i class="icon-long-arrow-right"></i>
+                                    </a>
+                                {%endif%}
+                            </div><!-- End .intro-content -->
+                        </div><!-- End .intro-slide -->
+
+                        <div class="intro-slide">
+                            <figure class="slide-image">
+                                <img src="{% static 'images/slider/slide_5_480w.jpg' %}" alt="Image Desc">
+                            </figure><!-- End .slide-image -->
+
+                            <div class="intro-content">
+                                <h3 class="intro-subtitle">Hair Care</h3><!-- End .h3 intro-subtitle -->
+                                <h1 class="intro-title">Unlock your hair's potential.</h1><!-- End .intro-title -->
+                                {% if categories%}
+                                    <a href="products/?category={{categories|access_list:3|get_name}}" class="btn btn-outline-white">
+                                        <span>SHOP NOW</span>
+                                        <i class="icon-long-arrow-right"></i>
+                                    </a>
+                                {% endif %}
+                            </div><!-- End .intro-content -->
+                        </div><!-- End .intro-slide -->
+
+                        <div class="intro-slide">
+                            <figure class="slide-image">
+                                <img src="{% static 'images/slider/slide_6_480w.jpg' %}" alt="Image Desc">
+                            </figure><!-- End .slide-image -->
+
+                            <div class="intro-content">
+                                <h3 class="intro-subtitle">Men's Care</h3><!-- End .h3 intro-subtitle -->
+                                <h1 class="intro-title">Elevate your grooming routine.</h1><!-- End .intro-title -->
+                                {% if categories%}
+                                    <a href="products/?category={{categories|access_list:2|get_name}}" class="btn btn-outline-white">
+                                        <span>SHOP NOW</span>
+                                        <i class="icon-long-arrow-right"></i>
+                                    </a>
+                                {%endif%}
+                            </div><!-- End .intro-content -->
+                        </div><!-- End .intro-slide -->
+                    </div><!-- End .intro-slider owl-carousel owl-simple -->
+                    
+                    <span class="slider-loader"></span><!-- End .slider-loader -->
+                </div><!-- End .intro-slider-container -->
+            </div><!-- End .col-lg-12 -->
+
+
+            <div class="col-lg-4">
+                <div class="intro-banners">
+                    <div class="row row-sm">
+                        <div class="col-md-6 col-lg-12">
+                            <div class="banner banner-display">
+                                <a href="#">
+                                    <img src="{% static 'images/banners/home/intro/banner_1.jpg' %}" alt="Banner" style="height: 215px; object-fit: cover;">
+                                </a>
+
+                                <div class="banner-content">
+                                    <h4 class="banner-subtitle text-darkwhite">
+                                        {% if categories%}
+                                            <a href="products/?category={{categories|access_list:1|get_name}}">Baby Care Products</a>
+                                        {% endif %}
+                                    </h4><!-- End .banner-subtitle -->
+                                    <h3 class="banner-title text-white"><a href="#">Nurture your little one with care.</a></h3><!-- End .banner-title -->
+                                    {% if categories%}
+                                        <a href="products/?category={{categories|access_list:1|get_name}}" class="btn btn-outline-white banner-link">Shop Now<i class="icon-long-arrow-right"></i></a>
+                                    {% endif %}
+                                </div><!-- End .banner-content -->
+                            </div><!-- End .banner -->
+                        </div><!-- End .col-md-6 col-lg-12 -->
+
+                        <div class="col-md-6 col-lg-12">
+                            <div class="banner banner-display mb-0">
+                                <a href="#">
+                                    <img src="{% static 'images/banners/home/intro/banner_2.jpg' %}" alt="Banner" style="height: 215px; object-fit: cover;">
+                                </a>
+
+                                <div class="banner-content">
+                                    <h4 class="banner-subtitle text-darkwhite"><a href="#">Gifts Sets</a></h4><!-- End .banner-subtitle -->
+                                    <h3 class="banner-title text-white"><a href="#">Available From 5th March 2024</a></h3><!-- End .banner-title -->
+                                    <a href="#" class="btn btn-outline-white banner-link">Discover Now<i class="icon-long-arrow-right"></i></a>
+                                </div><!-- End .banner-content -->
+                            </div><!-- End .banner -->
+                        </div><!-- End .col-md-6 col-lg-12 -->
+                    </div><!-- End .row row-sm -->
+                </div><!-- End .intro-banners -->
+            </div><!-- End .col-lg-4 -->
+        </div><!-- End .row -->
+
+        <div class="mb-6"></div><!-- End .mb-6 -->
+    </div><!-- End .container -->
+</div><!-- End .bg-lighter -->
+
+<div class="mb-6"></div><!-- End .mb-6 -->
+
+<div class="container">
+    <div class="heading heading-center mb-3">
+        <h2 class="title-lg">Featured Products</h2><!-- End .title -->
+    </div><!-- End .heading -->
+
+    <div class="tab-content tab-content-carousel">
+        <div class="tab-pane p-0 fade show active" id="trendy-all-tab" role="tabpanel">
+            <div class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow" data-toggle="owl" 
+                data-owl-options='{
+                    "nav": false, 
+                    "dots": true,
+                    "margin": 20,
+                    "loop": true,
+                    "autoplay": true,
+                    "responsive": {
+                        "0": {
+                            "items":2
+                        },
+                        "480": {
+                            "items":2
+                        },
+                        "768": {
+                            "items":3
+                        },
+                        "992": {
+                            "items":4
+                        },
+                        "1200": {
+                            "items":4,
+                            "nav": true,
+                            "dots": false
+                        }
+                    }
+                }'>
+                {% if featured_product%}
+                    {% for product in featured_product%}
+                    <div class="product product-11 text-center">
+                        <figure class="product-media">
+                            <a href="{% url 'product_details' product_id=product.id %}">
+                                <img src="{{product.images.all|access_list:0|image_url}}" alt="Product image" class="product-image" style="object-fit: cover; height:301px ">
+                                <img src="{{product.images.all|access_list:0|image_url}}" alt="Product image" class="product-image-hover" style="object-fit: cover; height:301px ">
+                            </a>
+    
+                            <div class="product-action-vertical">
+                                {% if product.is_in_wishlist%}
+                                    <a href="{% url 'remove_from_wishlist' product_id=product.id%}" class="btn-product-icon remove_wishlist" title="Remove from wishlist"></a>
+                                
+                                {% else %}
+                                    <a href="{% url 'add_to_wishlist' product_id=product.id%}" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
+                                {% endif %}
+                            </div><!-- End .product-action-vertical -->
+                        </figure><!-- End .product-media -->
+    
+                        <div class="product-body">
+                            <h3 class="product-title"><a href="{% url 'product_details' product_id=product.id%}">{{product.name|truncatechars:35}}</a></h3><!-- End .product-title -->
+                            <div class="product-price">
+                                {{product.formatted_price}}
+                            </div><!-- End .product-price -->
+    
+                        </div><!-- End .product-body -->
+                        <div class="product-action d-flex justify-content-center">
+                            {% if not product.is_in_cart%}
+                                {% if not product|is_in_cart:request.session.carts%} 
+                                    <form method="POST" action="{% url 'add_to_cart' %}">
+                                        {% csrf_token %}
+                                        <div>
+                                            <input type="hidden" id="{{product.id}}" name="product_id" class="form-control" value="{{product.id}}">
+                                            <input type="hidden" id="{{product.id}}1" name="qty" class="form-control" value="1" data-decimals="0">
+                                        </div><!-- End .product-details-quantity -->
+                                        <input type="submit" class="btn-product btn-cart px-5" value="Add to Cart" >
+                                    </form>
+                                {% else %}
+                                    {{product|is_in_cart:request.session.carts}}
+                                    <a href="{% url 'remove_from_cart' product_id=product.id %}" class="btn-product btn-cart"><span>remove from cart</span></a>
+                                {% endif %}     
+                            {% else %}
+                                <a href="{% url 'remove_from_cart' product_id=product.id %}" class="btn-product btn-cart"><span>remove from cart</span></a>
+                            {% endif %}
+                        </div><!-- End .product-action -->
+                    </div><!-- End .product -->
+                    {% endfor %}
+                {% endif %}
+
+            </div><!-- End .owl-carousel -->
+        </div><!-- .End .tab-pane -->
+    </div><!-- End .tab-content -->
+</div><!-- End .container -->
+
+<div class="container categories pt-6">
+    <h2 class="title-lg text-center mb-4">Shop by Categories</h2><!-- End .title-lg text-center -->
+
+    <div class="row">
+        {%if categories %}
+            <div class="col-6 col-lg-4">
+                <div class="banner banner-display banner-link-anim">
+                    <a href="products/?category={{categories|access_list:3|get_name}}">
+                        <img src="{% static 'images/banners/home/banner_1.jpg' %}" alt="Banner">
+                    </a>
+                        
+                    <div class="banner-content banner-content-center">
+                        <h3 class="banner-title text-white"><a href="products/?category={{categories|access_list:3|get_name}}">{{categories|access_list:3|friendly_name}}</a></h3><!-- End .banner-title -->
+                        <a href="products/?category={{categories|access_list:3|get_name}}" class="btn btn-outline-white banner-link">Shop Now<i class="icon-long-arrow-right"></i></a>
+                    </div><!-- End .banner-content -->
+                </div><!-- End .banner -->
+            </div><!-- End .col-sm-6 col-lg-3 -->
+            <div class="col-6 col-lg-4 order-lg-last">
+                <div class="banner banner-display banner-link-anim">
+                    <a href="products/?category={{categories|access_list:0|get_name}}">
+                        <img src="{% static 'images/banners/home/banner_2.jpg' %}" alt="Banner">
+                    </a>
+
+                    <div class="banner-content banner-content-center">
+                        <h3 class="banner-title text-white"><a href="products/?category={{categories|access_list:0|get_name}}">{{categories|access_list:0|friendly_name}}</a></h3><!-- End .banner-title -->
+                        <a href="products/?category={{categories|access_list:0|get_name}}" class="btn btn-outline-white banner-link">Shop Now<i class="icon-long-arrow-right"></i></a>
+                    </div><!-- End .banner-content -->
+                </div><!-- End .banner -->
+            </div><!-- End .col-sm-6 col-lg-3 -->
+            <div class="col-sm-12 col-lg-4 banners-sm">
+                <div class="row">
+                    <div class="banner banner-display banner-link-anim col-lg-12 col-6">
+                        <a href="products/?category={{categories|access_list:2|get_name}}">
+                            <img src="{% static 'images/banners/home/banner_3.jpg' %}" alt="Banner">
+                        </a>
+
+                        <div class="banner-content banner-content-center">
+                            <h3 class="banner-title text-white"><a href="products/?category={{categories|access_list:2|get_name}}">{{categories|access_list:2|friendly_name}}</a></h3><!-- End .banner-title -->
+                            <a href="products/?category={{categories|access_list:2|get_name}}" class="btn btn-outline-white banner-link">Shop Now<i class="icon-long-arrow-right"></i></a>
+                        </div><!-- End .banner-content -->
+                    </div><!-- End .banner -->
+
+                    <div class="banner banner-display banner-link-anim col-lg-12 col-6">
+                        <a href="products/?category={{categories|access_list:1|get_name}}">
+                            <img src="{% static 'images/banners/home/banner_4.jpg' %}" alt="Banner">
+                        </a>
+
+                        <div class="banner-content banner-content-center">
+                            <h3 class="banner-title text-white"><a href="products/?category={{categories|access_list:1|get_name}}">{{categories|access_list:1|friendly_name}}</a></h3><!-- End .banner-title -->
+                            <a href="products/?category={{categories|access_list:1|get_name}}" class="btn btn-outline-white banner-link">Shop Now<i class="icon-long-arrow-right"></i></a>
+                        </div><!-- End .banner-content -->
+                    </div><!-- End .banner -->
+                </div>
+            </div><!-- End .col-sm-6 col-lg-3 -->
+        {% endif %}
+    </div><!-- End .row -->
+</div><!-- End .container -->
+
+<div class="mb-5"></div><!-- End .mb-6 -->
+
+<div class="container">
+    <hr>
+    <div class="row justify-content-center">
+        <div class="col-lg-4 col-sm-6">
+            <div class="icon-box icon-box-card text-center">
+                <span class="icon-box-icon">
+                    <i class="icon-rocket"></i>
+                </span>
+                <div class="icon-box-content">
+                    <h3 class="icon-box-title">Payment & Delivery</h3><!-- End .icon-box-title -->
+                    <p>Free shipping for orders over €50</p>
+                </div><!-- End .icon-box-content -->
+            </div><!-- End .icon-box -->
+        </div><!-- End .col-lg-4 col-sm-6 -->
+
+        <div class="col-lg-4 col-sm-6">
+            <div class="icon-box icon-box-card text-center">
+                <span class="icon-box-icon">
+                    <i class="icon-rotate-left"></i>
+                </span>
+                <div class="icon-box-content">
+                    <h3 class="icon-box-title">Return & Refund</h3><!-- End .icon-box-title -->
+                    <p>Free 100% money back guarantee</p>
+                </div><!-- End .icon-box-content -->
+            </div><!-- End .icon-box -->
+        </div><!-- End .col-lg-4 col-sm-6 -->
+
+        <div class="col-lg-4 col-sm-6">
+            <div class="icon-box icon-box-card text-center">
+                <span class="icon-box-icon">
+                    <i class="icon-life-ring"></i>
+                </span>
+                <div class="icon-box-content">
+                    <h3 class="icon-box-title">Quality Support</h3><!-- End .icon-box-title -->
+                    <p>Alway online feedback 24/7</p>
+                </div><!-- End .icon-box-content -->
+            </div><!-- End .icon-box -->
+        </div><!-- End .col-lg-4 col-sm-6 -->
+    </div><!-- End .row -->
+
+    <div class="mb-2"></div><!-- End .mb-2 -->
+
+
+    <div class="cta cta-display bg-image pt-4 pb-4" style="background-image: url({% static 'images/backgrounds/cta/bg-6.jpg' %});">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-10 col-xl-8">
+                    <div class="row no-gutters flex-column flex-sm-row align-items-sm-center justify-content-between">
+                        <div class="col-6">
+                            <h3 class="cta-title text-white">Sign Up For newsletter</h3><!-- End .cta-title -->
+                            <p class="cta-desc text-white">Essence presents the best product news</p><!-- End .cta-desc -->
+                        </div><!-- End .col -->
+
+                        <form method="POST" action="{%url 'subscribe_newsletter'%}" class="col-6 row px-4">
+                            {% csrf_token %}
+                            <input type="email" name="email" class="form-control  rounded-left col-md-8" style="width:550px;" placeholder="Email Address" required>
+                            <button type="submit" class="btn btn-outline-white p-0 h-0 w-0 col-md-8" style="width: 80px; height: 46px;"><span>Submit</span><i class="icon-long-arrow-right"></i></button>
+                        </form><!-- End .col-auto -->
+                    </div><!-- End .row no-gutters -->
+                </div><!-- End .col-md-10 col-lg-9 -->
+            </div><!-- End .row -->
+        </div><!-- End .container -->
+    </div>
+</div><!-- End .cta -->
+
+{% endblock %}
